@@ -19,14 +19,14 @@ public class ChoreController : ControllerBase
 
 // get all chores
     [HttpGet]
-    [Authorize]
+    // [Authorize]
     public IActionResult Get()
     {
         return Ok(_dbContext.Chores.ToList());
     }
 
     [HttpGet("{id}")]
-    [Authorize]
+    // [Authorize]
     public IActionResult GetById(int id)
     {
         Chore foundChore = _dbContext
@@ -44,7 +44,7 @@ public class ChoreController : ControllerBase
     }
 
     [HttpPost("{id}/complete")]
-    [Authorize]
+    // [Authorize]
     public IActionResult PostChoreCompletion(int id, [FromQuery] int userId)
     {
         ChoreCompletion newChoreCompletion = new ChoreCompletion
@@ -63,7 +63,7 @@ public class ChoreController : ControllerBase
     // TEST THIS ONE DOWN
 
     [HttpPost]
-    [Authorize(Roles = "Admin")]
+    // [Authorize(Roles = "Admin")]
     public IActionResult PostChore(Chore newChore)
     {
         _dbContext.Chores.Add(newChore);
@@ -73,7 +73,7 @@ public class ChoreController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "Admin")]
+    // [Authorize(Roles = "Admin")]
     public IActionResult EditChore(int id, Chore editedChore)
     {
         Chore foundChore = _dbContext.Chores.SingleOrDefault(c => c.Id == id);
@@ -96,7 +96,7 @@ public class ChoreController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    [Authorize(Roles = "Admin")]
+    // [Authorize(Roles = "Admin")]
     public IActionResult DeleteChore(int id)
     {
         Chore foundChore = _dbContext.Chores.SingleOrDefault(c => c.Id == id);
@@ -113,7 +113,7 @@ public class ChoreController : ControllerBase
     }
 
     [HttpPost("{id}/assign")]
-    [Authorize(Roles = "Admin")]
+    // [Authorize(Roles = "Admin")]
     public IActionResult PostChoreAssignment(int id, [FromQuery] int userId)
     {
         ChoreAssignment newChoreAssignment = new ChoreAssignment
@@ -129,7 +129,7 @@ public class ChoreController : ControllerBase
     }
 
     [HttpPost("{id}/unassign")]
-    [Authorize(Roles = "Admin")]
+    // [Authorize(Roles = "Admin")]
     public IActionResult PostChoreUnassignment(int id, [FromQuery] int userId)
     {
         // even though a post, is this endpoint to be written like a delete?
