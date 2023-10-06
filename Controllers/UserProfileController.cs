@@ -20,14 +20,14 @@ public class UserProfileController : ControllerBase
 
     [HttpGet]
     // [Authorize] // <- original to code, but edited below to make the method available only to logged-in admin.
-    [Authorize(Roles = "Admin")]
+    // [Authorize(Roles = "Admin")]
     public IActionResult Get() // gets data for all users; should only be available to a logged-in admin.
     {
         return Ok(_dbContext.UserProfiles.ToList());
     }
 
     [HttpGet("withroles")]
-    [Authorize(Roles = "Admin")]
+    // [Authorize(Roles = "Admin")]
     public IActionResult GetWithRoles()
     {
         return Ok(_dbContext.UserProfiles
