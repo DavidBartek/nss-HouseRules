@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { deleteChore, getChores } from "../../managers/choreManager";
+import { completeChore, deleteChore, getChores } from "../../managers/choreManager";
 import { Button, Table } from "reactstrap";
 import ChoreDetails from "./ChoreDetails";
 import { Link } from "react-router-dom";
@@ -12,6 +12,15 @@ export default function ChoresList ({ loggedInUser }) {
     useEffect(() => {
         getChores().then(setChores);
     }, []);
+
+    const handleCompleteChore = (e, choreId) => {
+        e.preventDefault();
+        // console.log(`Chore id: ${choreId}`)
+        // console.log(`User id: ${loggedInUser.id}`)
+        completeChore(choreId, loggedInUser.id)
+            .then(() => getChores()
+            .then(setChores))
+    }
 
     const handleDeleteChore = (e, choreId) => {
         e.preventDefault();
@@ -39,8 +48,9 @@ export default function ChoresList ({ loggedInUser }) {
                         <th>Chore</th>
                         <th>Difficulty</th>
                         <th>Frequency</th>
-                        {loggedInUser.roles.includes("Admin") ? (<th></th>) : ""}
-                        {loggedInUser.roles.includes("Admin") ? (<th></th>) : ""}
+                        <th>Complete</th>
+                        {loggedInUser.roles.includes("Admin") ? (<th>Delete</th>) : ""}
+                        {loggedInUser.roles.includes("Admin") ? (<th>Details</th>) : ""}
                     </tr>
                 </thead>
                 <tbody>
@@ -49,24 +59,29 @@ export default function ChoresList ({ loggedInUser }) {
                             <td>{c.name}</td>
                             <td>{c.difficulty} / 5</td>
                             <td>Every {c.choreFrequencyDays} days</td>
+                            <td>
+                                <Button
+                                    color="success"
+                                    onClick={(e) => handleCompleteChore(e, c.id)}>
+                                    Complete
+                                </Button>
+                            </td>
                             {loggedInUser.roles.includes("Admin") ? (
-                                <>
-                                    <td>
-                                        <Button
-                                            color="danger"
-                                            onClick={(e) => {handleDeleteChore(e, c.id)}}>
-                                            Delete Chore
-                                        </Button>
-                                    </td>
-                                    <td>
-                                        <Button
-                                            color="info"
-                                            onClick={() => toggleDetails(c.id)}>
-                                            See details
-                                        </Button>
-                                    </td>
-                                </>
-                            ) : ""}
+                                <td>
+                                    <Button
+                                        color="danger"
+                                        onClick={(e) => handleDeleteChore(e, c.id)}>
+                                        Delete Chore
+                                    </Button>
+                                </td> ) : "" }
+                            {loggedInUser.roles.includes("Admin") ? (
+                                <td>
+                                    <Button
+                                        color="info"
+                                        onClick={() => toggleDetails(c.id)}>
+                                        See details
+                                    </Button>
+                                </td> ) : ""}
                         </tr>
                     )}
                 </tbody>

@@ -57,7 +57,7 @@ public class ChoreController : ControllerBase
         _dbContext.ChoreCompletions.Add(newChoreCompletion);
         _dbContext.SaveChanges();
 
-        return NoContent();
+        return Ok(newChoreCompletion);
     }
 
     // TEST THIS ONE DOWN
@@ -125,7 +125,7 @@ public class ChoreController : ControllerBase
         _dbContext.ChoreAssignments.Add(newChoreAssignment);
         _dbContext.SaveChanges();
 
-        return NoContent();
+        return Ok(newChoreAssignment);
     }
 
     [HttpPost("{id}/unassign")]
@@ -146,6 +146,6 @@ public class ChoreController : ControllerBase
         _dbContext.ChoreAssignments.Remove(foundChoreAssignment);
         _dbContext.SaveChanges();
 
-        return NoContent();
+        return Ok(foundChoreAssignment);
     }
 }
