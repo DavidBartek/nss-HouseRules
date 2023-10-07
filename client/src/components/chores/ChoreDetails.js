@@ -17,17 +17,7 @@ export default function ChoreDetails ({ loggedInUser, choreId }) {
 // this annoyance would probably be to modify the getChoreDetails API endpoint to just
 // .Include the User's details. But this was not asked for per requirements, and it's too late.
 
-    // const userIdToName = (userProfileId) => {
-    //     if (!userProfileId) {
-    //         return null;
-    //     }
-    //     const foundUser = users.find(u => u.id === userProfileId);
-
-    //     if (!foundUser) {
-    //         return null;
-    //     }
-    //     return `${foundUser.firstName} ${foundUser.lastName}`;
-    // }
+    // j
 
     const datePart = (dateString) => {
         return dateString.split("T")[0];
